@@ -18,7 +18,7 @@ module ProgressJob
       end
 
       def migration_version
-        if rails5?
+        if Rails::VERSION::MAJOR >= 5 then
           "[#{Rails::VERSION::MAJOR}.#{Rails::VERSION::MINOR}]"
         end
       end
