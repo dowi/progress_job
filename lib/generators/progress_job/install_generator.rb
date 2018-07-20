@@ -1,5 +1,3 @@
-require "rails/generators"
-
 module ProgressJob
 
   module Generators
