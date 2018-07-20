@@ -1,7 +1,5 @@
-# coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'progress_job/version'
+$:.push File.expand_path("lib", __dir__)
+require "progress_job/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "progress_job"
@@ -20,5 +18,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.5"
   spec.add_development_dependency "rake"
-  spec.add_dependency 'delayed_job'
+  spec.add_dependency "delayed_job"
 end
