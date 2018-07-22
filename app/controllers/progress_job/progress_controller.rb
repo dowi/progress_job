@@ -12,9 +12,9 @@ module ProgressJob
       percentage = !@delayed_job.progress_max.zero? ?
         @delayed_job.progress_current / @delayed_job.progress_max.to_f * 100 : 0
       render json:
-        @delayed_job.attributes
+        @delayed_job.attributes.with_indifferent_access
         .merge!(percentage: percentage)
-        .to_json
+        .except!(:handler, :last_error)
     end
   end
 end
