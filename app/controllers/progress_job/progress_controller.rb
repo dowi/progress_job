@@ -5,16 +5,26 @@
 module ProgressJob
   class ProgressController < ActionController::Base
     def show
-      @delayed_job = Delayed::Job.find_by_id(params[:job_id])
+      @delayed_job = \
+        Delayed::Job.find_by_id(params[:job_id])
+
       if @delayed_job.nil? then
-        render json: { percentage: 100, complete: true } and return
+        render json: {
+          percentage: 100,
+          complete:   true
+        }
+      else
+        percentage = \
+          @delayed_job.progress_max.zero? ? 0 : \
+          @delayed_job.progress_current \
+          .fdiv(@delayed_job.progress_max) * 100
+
+        render json: \
+          @delayed_job.attributes \
+          .symbolize_keys \
+          .except(:handler, :last_error) \
+          .merge(percentage: percentage)
       end
-      percentage = !@delayed_job.progress_max.zero? ?
-        @delayed_job.progress_current / @delayed_job.progress_max.to_f * 100 : 0
-      render json:
-        @delayed_job.attributes.with_indifferent_access
-        .merge!(percentage: percentage)
-        .except!(:handler, :last_error)
     end
   end
 end
