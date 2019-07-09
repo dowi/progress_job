@@ -1,10 +1,12 @@
 module ProgressJob
   class Base
     def initialize(progress_max: 100)
+      puts "Base initialize" 
       @progress_max = progress_max
     end
 
     def before(job)
+      puts "before"
       @job = job
 #       job.update_column(:progress_max, @progress_max)
 #       job.update_column(:progress_current, 0)
